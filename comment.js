@@ -1,18 +1,17 @@
-// Create web server
+// Create web server with controllers
 
-// Import express
-const express = require("express");
-
-// Create router
+// Import modules
+const express = require('express');
 const router = express.Router();
-
-// Import controller
-const controller = require("../controllers/comment");
+const commentController = require('../controllers/commentController');
+const auth = require('../middleware/auth');
 
 // Create routes
-router.get("/", controller.getAll);
-router.post("/", controller.create);
-router.delete("/:id", controller.delete);
+router.post('/', auth, commentController.createComment);
+router.get('/', auth, commentController.getComments);
+router.get('/:id', auth, commentController.getComment);
+router.put('/:id', auth, commentController.updateComment);
+router.delete('/:id', auth, commentController.deleteComment);
 
-// Export router
+// Export routes
 module.exports = router;
